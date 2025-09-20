@@ -191,7 +191,7 @@ $attractions_result = mysqli_query($conn, $attractions_sql);
             <?php if (mysqli_num_rows($attractions_result) > 0): ?>
                 <?php while ($row = mysqli_fetch_assoc($attractions_result)): ?>
                     <div class="attraction-card">
-                        <img src="assets/images/attractions/<?php echo htmlspecialchars($row['image_url']); ?>" alt="<?php echo htmlspecialchars($row['name']); ?>">
+                        <img src="assets/img/attractions/<?php echo htmlspecialchars($row['image_url']); ?>" alt="<?php echo htmlspecialchars($row['name']); ?>">
                         <div class="attraction-content">
                             <h3><?php echo htmlspecialchars($row['name']); ?></h3>
                             <span class="city-name"><?php echo htmlspecialchars($row['city_name']); ?></span>

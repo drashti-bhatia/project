@@ -10,7 +10,7 @@ unset($_SESSION['registration_success']);
 
 // Check if user is already logged in, if so, redirect to dashboard
 if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
-    header("Location: dashboard.php");
+    header("Location: ../admin/dashboard.php");
     exit();
 }
 ?>

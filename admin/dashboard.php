@@ -2,10 +2,10 @@
 session_start();
 include('../includes/db_connect.php');
 
-// if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== true) {
-//     header("Location: ../login.php");
-//     exit();
-// }
+if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== true) {
+    header("Location: ../login.php");
+    exit();
+}
 
 $page_title = "Admin Dashboard";
 
