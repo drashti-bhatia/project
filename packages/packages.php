@@ -162,7 +162,7 @@ $result = mysqli_query($conn, $sql);
     <section class="packages-grid">
         <?php while ($package = mysqli_fetch_assoc($result)): ?>
         <div class="package-card">
-            <img src="assets/img/packages/package-<?php echo $package['package_id']; ?>.jpg" alt="<?php echo $package['name']; ?>" class="package-image">
+            <img src="../assets/img/packages/<?php echo htmlspecialchars($package['image_url']); ?>" alt="<?php echo htmlspecialchars($package['name']); ?>" class="package-image">
             <div class="package-content">
                 <h3><?php echo $package['name']; ?></h3>
                 <div class="package-price">₹<?php echo number_format($package['price']); ?> per person</div>
