@@ -118,7 +118,7 @@ $cities_result = mysqli_query($conn, $cities_sql);
             <?php if (mysqli_num_rows($cities_result) > 0): ?>
                 <?php while ($row = mysqli_fetch_assoc($cities_result)): ?>
                     <div class="city-card">
-                        <img src="assets/images/cities/<?php echo htmlspecialchars($row['image_url']); ?>" alt="<?php echo htmlspecialchars($row['city_name']); ?>">
+                        <img src="assets/img/cities/<?php echo htmlspecialchars($row['image_url']); ?>" alt="<?php echo htmlspecialchars($row['city_name']); ?>">
                         <div class="city-content">
                             <h3><?php echo htmlspecialchars($row['city_name']); ?></h3>
                             <p>Best time to visit: <span class="best-time"><?php echo htmlspecialchars($row['best_time_to_visit']); ?></span></p>
