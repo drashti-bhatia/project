@@ -91,13 +91,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <th>Departure City</th>
                         <th>Arrival City</th>
                         <th>Departure Time</th>
+                        <th>Arrival Time</th>
                         <th>Price</th>
+                        <th>Description</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php
-                    $sql = "SELECT * FROM transport_options ORDER BY transport_id DESC";
+                    $sql = "SELECT * FROM transport_options ORDER BY transport_id";
                     $result = mysqli_query($conn, $sql);
 
                     while ($row = mysqli_fetch_assoc($result)) {
@@ -112,7 +114,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         echo '<td>' . $row['departure_city'] . '</td>';
                         echo '<td>' . $row['arrival_city'] . '</td>';
                         echo '<td>' . date('h:i A', strtotime($row['departure_time'])) . '</td>';
+                        echo '<td>' . ($row['arrival_time'] ? date('h:i A', strtotime($row['arrival_time'])) : 'N/A') . '</td>';
                         echo '<td>₹' . $row['approx_price'] . '</td>';
+                        echo '<td class="attraction-description" title="' . htmlspecialchars($row['description']) . '">' . substr($row['description'], 0, 50) . '...</td>';
                         echo '<td class="action-btns">';
                         echo '<a href="#" class="edit-btn" onclick="openEditModal(' . $row['transport_id'] . ', \'' . htmlspecialchars($row['transport_type'], ENT_QUOTES) . '\', \'' . htmlspecialchars($row['departure_city'], ENT_QUOTES) . '\', \'' . htmlspecialchars($row['arrival_city'], ENT_QUOTES) . '\', \'' . htmlspecialchars($row['departure_time'], ENT_QUOTES) . '\', \'' . htmlspecialchars($row['arrival_time'], ENT_QUOTES) . '\', \'' . $row['approx_price'] . '\', \'' . htmlspecialchars($row['description'], ENT_QUOTES) . '\')"><i class="fas fa-edit"></i> Edit</a>';
                         echo '<form method="POST" action="" style="display:inline;">';

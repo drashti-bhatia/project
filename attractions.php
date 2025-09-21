@@ -85,6 +85,17 @@ $attractions_result = mysqli_query($conn, $attractions_sql);
             flex-direction: column;
             flex-grow: 1;
         }
+        
+        .attraction-details {
+            text-align: left;
+            margin-top: 10px;
+            font-size: 0.9em;
+            color: #555;
+        }
+
+        .attraction-details p {
+            margin: 5px 0;
+        }
 
         .attraction-card h3 {
             font-size: 1.5rem;
@@ -196,9 +207,13 @@ $attractions_result = mysqli_query($conn, $attractions_sql);
                             <h3><?php echo htmlspecialchars($row['name']); ?></h3>
                             <span class="city-name"><?php echo htmlspecialchars($row['city_name']); ?></span>
                             <p><?php echo htmlspecialchars(substr($row['description'], 0, 100)); ?>...</p>
+                            <div class="attraction-details">
+                                <p><strong>Best Time:</strong> <?php echo htmlspecialchars($row['best_time_to_visit']); ?></p>
+                                <p><strong>Hours:</strong> <?php echo htmlspecialchars($row['opening_hours']); ?></p>
+                            </div>
                             <div class="attraction-meta">
                                 <span class="entry-fee">Fee: ₹<?php echo htmlspecialchars($row['entry_fee']); ?></span>
-                                <a href="attraction-detail.php?id=<?php echo $row['attraction_id']; ?>" class="btn" style="padding: 8px 20px;">View Details</a>
+                                <a href="city-detail.php?id=<?php echo $row['attraction_id']; ?>" class="btn" style="padding: 8px 20px;">View Details</a>
                             </div>
                         </div>
                     </div>

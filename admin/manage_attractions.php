@@ -117,12 +117,10 @@ $cities_result = mysqli_query($conn, $cities_sql);
     <div class="admin-container">
         <?php include 'admin_sidebar.php'; ?>
         
-    <!-- Main Content -->
     <div class="admin-content">
         <h1 style="color: #1f8585ff; margin-bottom: 30px;">Manage Attractions</h1>
         <button class="btn-add" onclick="openAddModal()">Add New Attraction</button>
 
-        <!-- Attractions List -->
         <div class="table-container glass">
             <h2 style="color: #1f8585ff; margin-bottom: 20px;">Attractions List</h2>
             <table>
@@ -132,7 +130,8 @@ $cities_result = mysqli_query($conn, $cities_sql);
                         <th>Image</th>
                         <th>Name</th>
                         <th>City</th>
-                        <th>Description</th>
+                        <th>Best Time</th>
+                        <th>Opening Hours</th>
                         <th>Entry Fee</th>
                         <th>Actions</th>
                     </tr>
@@ -146,7 +145,7 @@ $cities_result = mysqli_query($conn, $cities_sql);
                         $cities[$city['city_id']] = $city['city_name'];
                     }
                     
-                    $sql = "SELECT * FROM attractions ORDER BY attraction_id DESC";
+                    $sql = "SELECT * FROM attractions ORDER BY attraction_id";
                     $result = mysqli_query($conn, $sql);
 
                     while ($row = mysqli_fetch_assoc($result)) {
@@ -155,7 +154,8 @@ $cities_result = mysqli_query($conn, $cities_sql);
                         echo '<td><img src="../assets/images/attractions/' . $row['image_url'] . '" class="attraction-img" alt="' . $row['name'] . '"></td>';
                         echo '<td>' . $row['name'] . '</td>';
                         echo '<td>' . (isset($cities[$row['city_id']]) ? $cities[$row['city_id']] : 'N/A') . '</td>';
-                        echo '<td class="attraction-description" title="' . htmlspecialchars($row['description']) . '">' . substr($row['description'], 0, 50) . '...</td>';
+                        echo '<td>' . $row['best_time_to_visit'] . '</td>';
+                        echo '<td>' . $row['opening_hours'] . '</td>';
                         echo '<td>₹' . $row['entry_fee'] . '</td>';
                         echo '<td class="action-btns">';
                         echo '<a href="#" class="edit-btn" onclick="openEditModal(' . $row['attraction_id'] . ', \'' . addslashes(htmlspecialchars($row['name'], ENT_QUOTES)) . '\', \'' . $row['city_id'] . '\', \'' . addslashes(htmlspecialchars($row['description'], ENT_QUOTES)) . '\', \'' . $row['entry_fee'] . '\', \'' . addslashes(htmlspecialchars($row['best_time_to_visit'], ENT_QUOTES)) . '\', \'' . addslashes(htmlspecialchars($row['opening_hours'], ENT_QUOTES)) . '\', \'' . $row['image_url'] . '\')"><i class="fas fa-edit"></i> Edit</a>';
@@ -173,7 +173,6 @@ $cities_result = mysqli_query($conn, $cities_sql);
     </div>
 </div>
 
-<!-- Edit/Add Attraction Modal -->
 <div id="attractionModal" class="modal">
     <div class="modal-content">
         <span class="close" onclick="closeModal()">&times;</span>

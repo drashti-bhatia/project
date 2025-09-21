@@ -113,7 +113,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             JOIN users u ON r.user_id = u.user_id 
                             LEFT JOIN packages p ON r.package_id = p.package_id
                             LEFT JOIN attractions a ON r.attraction_id = a.attraction_id
-                            ORDER BY r.date_posted DESC";
+                            ORDER BY r.date_posted";
                     $result = mysqli_query($conn, $sql);
 
                     while ($row = mysqli_fetch_assoc($result)) {

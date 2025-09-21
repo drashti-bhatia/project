@@ -71,7 +71,7 @@ $sql = "SELECT b.*, u.username, u.email, p.name as package_name
         FROM bookings b 
         JOIN users u ON b.user_id = u.user_id 
         JOIN packages p ON b.package_id = p.package_id 
-        ORDER BY b.booking_date DESC";
+        ORDER BY b.booking_id";
 $result = mysqli_query($conn, $sql);
 if ($result) {
     while ($row = mysqli_fetch_assoc($result)) {

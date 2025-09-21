@@ -25,11 +25,11 @@ session_start();
                 <ul>
                     <li><a href="index.php">Home</a></li>
                     <li><a href="attractions.php">Attractions</a></li>
-                    <li><a href="packages/packages.php">Packages</a></li>
+                    <li><a href="packages.php">Packages</a></li>
+                    <li><a href="cities.php">Cities</a></li>
                     <?php if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true): ?>
                         <li><a href="packages/bookings.php">Bookings</a></li>
-                        <li><a href="city-detail.php">City Details</a></li>
-                        <li><a href="reviews/reviews.php">Review</a></li>                        
+                        <li><a href="reviews.php">Review</a></li>                        
                         <li><a href="logout.php">Logout</a></li>
                     <?php else: ?>
                         <li><a href="login.php">Login</a></li>

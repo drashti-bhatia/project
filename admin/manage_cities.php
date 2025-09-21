@@ -93,8 +93,10 @@ $page_title = "Manage Cities";
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         <?php include 'admin_styles.css'; ?>
-
-        
+        /* Ensures the modal is hidden by default. */
+        .modal {
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -117,12 +119,13 @@ $page_title = "Manage Cities";
                         <th>Image</th>
                         <th>Name</th>
                         <th>Description</th>
+                        <th>Best Time to Visit</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php
-                    $sql = "SELECT * FROM cities ORDER BY city_id DESC";
+                    $sql = "SELECT * FROM cities ORDER BY city_id";
                     $result = mysqli_query($conn, $sql);
 
                     while ($row = mysqli_fetch_assoc($result)) {
@@ -130,7 +133,8 @@ $page_title = "Manage Cities";
                         echo '<td>' . $row['city_id'] . '</td>';
                         echo '<td><img src="../assets/images/cities/' . $row['image_url'] . '" class="city-img" alt="' . $row['city_name'] . '"></td>';
                         echo '<td>' . $row['city_name'] . '</td>';
-                        echo '<td>' . substr($row['description'], 0, 50) . '...</td>';
+                        echo '<td class="attraction-description" title="' . htmlspecialchars($row['description']) . '">' . substr($row['description'], 0, 50) . '...</td>';
+                        echo '<td>' . $row['best_time_to_visit'] . '</td>';
                         echo '<td class="action-btns">';
                         echo '<a href="#" class="edit-btn" onclick="openEditModal(' . $row['city_id'] . ', \'' . htmlspecialchars($row['city_name'], ENT_QUOTES) . '\', \'' . htmlspecialchars($row['description'], ENT_QUOTES) . '\', \'' . htmlspecialchars($row['best_time_to_visit'], ENT_QUOTES) . '\', \'' . $row['image_url'] . '\')"><i class="fas fa-edit"></i> Edit</a>';
                         echo '<form method="POST" action="" style="display:inline;">';
@@ -178,8 +182,10 @@ $page_title = "Manage Cities";
                 </div>
             </div>
 
-            <button type="submit" id="modalSubmitBtn" class="btn"></button>
-            <button type="button" class="btn" style="background: #666; margin-left: 10px;" onclick="closeModal()">Cancel</button>
+            <div class="btn-container">
+                <button type="submit" id="modalSubmitBtn" class="btn"></button>
+                <button type="button" class="btn" onclick="closeModal()">Cancel</button>
+            </div>
         </form>
     </div>
 </div>

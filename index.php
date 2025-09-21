@@ -57,7 +57,7 @@ include 'includes/db_connect.php';
 <section class="section">
     <div class="section-header">
         <h2 class="section-title">Popular Destinations</h2>
-        <a class="section-link" href="destinations.php">View all destinations</a>
+        <a class="section-link" href="cities.php">View all destinations</a>
         <i class="section-arrow">
             <svg version="1.0" viewBox="0 0 512.000000 512.000000" preserveAspectRatio="xMidYMid meet">
                 <g transform="translate(0.000000,512.000000) scale(0.100000,-0.100000)" fill="#ffffffff" stroke="none">
@@ -88,7 +88,7 @@ include 'includes/db_connect.php';
 <section class="section">
     <div class="section-header">
         <h2 class="section-title">Featured Packages</h2>
-        <a class="section-link" href="packages/packages.php">View all packages</a>
+        <a class="section-link" href="packages.php">View all packages</a>
         <i class="section-arrow">
             <svg version="1.0" viewBox="0 0 512.000000 512.000000" preserveAspectRatio="xMidYMid meet">
                 <g transform="translate(0.000000,512.000000) scale(0.100000,-0.100000)" fill="#ffffffff" stroke="none">
@@ -124,7 +124,7 @@ include 'includes/db_connect.php';
 <section class="section">
     <div class="section-header">
         <h2 class="section-title">What Our Travelers Say</h2>
-        <a class="section-link" href="reviews/reviews.php">View all reviews</a>
+        <a class="section-link" href="reviews.php">View all reviews</a>
         <i class="section-arrow">
             <svg version="1.0" viewBox="0 0 512.000000 512.000000" preserveAspectRatio="xMidYMid meet">
                 <g transform="translate(0.000000,512.000000) scale(0.100000,-0.100000)" fill="#ffffffff" stroke="none">
@@ -140,7 +140,7 @@ include 'includes/db_connect.php';
                 LEFT JOIN users u ON r.user_id = u.user_id 
                 LEFT JOIN packages p ON r.package_id = p.package_id 
                 LEFT JOIN attractions a ON r.attraction_id = a.attraction_id
-                ORDER BY r.date_posted DESC 
+                ORDER BY r.review_id
                 LIMIT 3";
         $result = mysqli_query($conn, $sql);
 
@@ -171,7 +171,7 @@ include 'includes/db_connect.php';
                 style="display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;">
                 <h3 style="color: #FF6B35; margin-bottom: 15px;">Share Your Experience</h3>
                 <p style="margin-bottom: 20px;">Have you traveled with us? Leave a review!</p>
-                <a href="reviews/submit_review.php" class="btn" style="padding: 8px 20px;">Write a Review</a>
+                <a href="reviews.php" class="btn" style="padding: 8px 20px;">Write a Review</a>
             </div>
         <?php endif; ?>
     </div>
