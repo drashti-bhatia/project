@@ -37,8 +37,16 @@ include 'includes/db_connect.php';
                 </div>
             </div>
 
-            <button class="arrow prev" onclick="changeSlide(-1)">‹</button>
-            <button class="arrow next" onclick="changeSlide(1)">›</button>
+            <button class="arrow prev" onclick="changeSlide(-1)">
+                <span class="material-symbols-rounded">
+                    arrow_back
+                </span>
+            </button>
+            <button class="arrow next" onclick="changeSlide(1)">
+                <span class="material-symbols-rounded">
+                    arrow_forward
+                </span>
+            </button>
 
             <div class="navigation">
                 <div class="nav-dot active" onclick="currentSlide(1)"></div>

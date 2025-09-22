@@ -3,7 +3,7 @@ include('includes/db_connect.php');
 
 
 if (!isset($_GET['id'])) {
-    header("Location: attractions.php");
+    header("Location: destinations.php");
     exit();
 }
 
@@ -13,7 +13,7 @@ $result = mysqli_query($conn, $sql);
 $city = mysqli_fetch_assoc($result);
 
 if (!$city) {
-    header("Location: attractions.php");
+    header("Location: destinations.php");
     exit();
 }
 
@@ -106,7 +106,7 @@ $page_title = $city['city_name'] . " - Gujarat Yatar Portal";
         <div class="container">
             <div class="city-info">
                 <div>
-                    <h2>About <?php echo $city['city_name']; ?></h2>
+                    <h2>About <?php echo $city['name']; ?></h2>
                     <p><?php echo $city['description']; ?></p>
                 </div>
                 <div>
@@ -114,12 +114,12 @@ $page_title = $city['city_name'] . " - Gujarat Yatar Portal";
                         <h3>Travel Information</h3>
                         <p><strong>Best Time to Visit:</strong> <?php echo $city['best_time_to_visit']; ?></p>
                         <p><strong>Ideal Duration:</strong> 3-5 days</p>
-                        <a href="packages.php?city=<?php echo $city['city_name']; ?>" class="btn">View Packages</a>
+                        <a href="packages.php?city=<?php echo $city['name']; ?>" class="btn">View Packages</a>
                     </div>
                 </div>
             </div>
             
-            <h2>Top Attractions in <?php echo $city['city_name']; ?></h2>
+            <h2>Top Attractions in <?php echo $city['name']; ?></h2>
             <div class="attractions-grid">
                 <?php while ($attraction = mysqli_fetch_assoc($attractions_result)): ?>
                 <div class="attraction-card">
@@ -136,6 +136,6 @@ $page_title = $city['city_name'] . " - Gujarat Yatar Portal";
         </div>
     </section>
     
-    <?php include "includes/footer.php"; ?>
+    <?php include "../includes/footer.php"; ?>
 </body>
 </html>

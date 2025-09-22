@@ -132,7 +132,6 @@ $cities_result = mysqli_query($conn, $cities_sql);
                         <th>Name</th>
                         <th>Price</th>
                         <th>Duration</th>
-                        <th>Inclusions</th>
                         <th>City</th>
                         <th>Actions</th>
                     </tr>
@@ -146,7 +145,7 @@ $cities_result = mysqli_query($conn, $cities_sql);
                         $cities[$city['city_id']] = $city['city_name'];
                     }
                     
-                    $sql = "SELECT * FROM packages ORDER BY package_id";
+                    $sql = "SELECT * FROM packages ORDER BY package_id DESC";
                     $result = mysqli_query($conn, $sql);
 
                     while ($row = mysqli_fetch_assoc($result)) {
@@ -156,7 +155,6 @@ $cities_result = mysqli_query($conn, $cities_sql);
                         echo '<td>' . $row['name'] . '</td>';
                         echo '<td>₹' . $row['price'] . '</td>';
                         echo '<td>' . $row['duration_days'] . ' days</td>';
-                        echo '<td class="attraction-description" title="' . htmlspecialchars($row['inclusions']) . '">' . substr($row['inclusions'], 0, 50) . '...</td>';
                         echo '<td>' . (isset($cities[$row['city_id']]) ? $cities[$row['city_id']] : 'N/A') . '</td>';
                         echo '<td class="action-btns">';
                         echo '<a href="#" class="edit-btn" onclick="openEditModal(' . $row['package_id'] . ', \'' . htmlspecialchars($row['name'], ENT_QUOTES) . '\', \'' . htmlspecialchars($row['description'], ENT_QUOTES) . '\', \'' . $row['price'] . '\', \'' . $row['duration_days'] . '\', \'' . htmlspecialchars($row['inclusions'], ENT_QUOTES) . '\', \'' . $row['city_id'] . '\', \'' . $row['image_url'] . '\')"><i class="fas fa-edit"></i> Edit</a>';

@@ -1,5 +1,4 @@
 <?php
-session_start();
 include('includes/db_connect.php');
 include('header.php');
 
@@ -40,7 +39,6 @@ $attractions_result = mysqli_query($conn, $attractions_sql);
             padding: 100px 0;
             text-align: center;
             color: white;
-            margin-top: 105px; 
         }
         
         .attractions-hero h1 {
@@ -85,33 +83,26 @@ $attractions_result = mysqli_query($conn, $attractions_sql);
             flex-direction: column;
             flex-grow: 1;
         }
-        
-        .attraction-details {
-            text-align: left;
-            margin-top: 10px;
-            font-size: 0.9em;
-            color: #555;
-        }
-
-        .attraction-details p {
-            margin: 5px 0;
-        }
 
         .attraction-card h3 {
             font-size: 1.5rem;
             margin-bottom: 5px;
             color: #000000;
+            text-align: left;
         }
 
         .attraction-card .city-name {
             font-size: 1rem;
             color: #666;
             margin-bottom: 15px;
+            text-align: left;
         }
 
         .attraction-card p {
-            margin-bottom: 15px;
+            height: fit-content;
+            margin-bottom: 10px;
             flex-grow: 1;
+            text-align: left;
         }
 
         .attraction-card:hover {
@@ -128,8 +119,8 @@ $attractions_result = mysqli_query($conn, $attractions_sql);
         .entry-fee {
             background: #FF6B35;
             color: white;
-            padding: 5px 10px;
-            border-radius: 20px;
+            padding: 7px;
+            border-radius: 40px;
             font-size: 0.9rem;
         }
 
@@ -202,18 +193,14 @@ $attractions_result = mysqli_query($conn, $attractions_sql);
             <?php if (mysqli_num_rows($attractions_result) > 0): ?>
                 <?php while ($row = mysqli_fetch_assoc($attractions_result)): ?>
                     <div class="attraction-card">
-                        <img src="assets/img/attractions/<?php echo htmlspecialchars($row['image_url']); ?>" alt="<?php echo htmlspecialchars($row['name']); ?>">
+                        <img src="assets/images/attractions/<?php echo htmlspecialchars($row['image_url']); ?>" alt="<?php echo htmlspecialchars($row['name']); ?>">
                         <div class="attraction-content">
                             <h3><?php echo htmlspecialchars($row['name']); ?></h3>
                             <span class="city-name"><?php echo htmlspecialchars($row['city_name']); ?></span>
                             <p><?php echo htmlspecialchars(substr($row['description'], 0, 100)); ?>...</p>
-                            <div class="attraction-details">
-                                <p><strong>Best Time:</strong> <?php echo htmlspecialchars($row['best_time_to_visit']); ?></p>
-                                <p><strong>Hours:</strong> <?php echo htmlspecialchars($row['opening_hours']); ?></p>
-                            </div>
                             <div class="attraction-meta">
                                 <span class="entry-fee">Fee: ₹<?php echo htmlspecialchars($row['entry_fee']); ?></span>
-                                <a href="city-detail.php?id=<?php echo $row['attraction_id']; ?>" class="btn" style="padding: 8px 20px;">View Details</a>
+                                <a href="attraction-detail.php?id=<?php echo $row['attraction_id']; ?>" class="btn" style="padding: 8px 20px;">View Details</a>
                             </div>
                         </div>
                     </div>

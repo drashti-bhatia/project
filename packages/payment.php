@@ -1,5 +1,4 @@
 <?php
-session_start();
 include "../includes/db_connect.php";
 
 if (!isset($_SESSION['user_id'])) {
@@ -58,7 +57,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo $page_title; ?></title>
-    <link rel="stylesheet" href="../assets/css/style.css">
     <style>
         .payment-hero {
             background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('assets/img/payment-bg.jpg');
