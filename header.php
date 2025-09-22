@@ -1,6 +1,3 @@
-<?php
-session_start();
-?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -10,35 +7,51 @@ session_start();
     <title>Gujarat Yatar Portal</title>
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 </head>
-
-<body>
-    <header>
-        <div class="header-top"> </div>
-        </div>
-        <div class="container main-header">
+<body class="bg-pattern">
+    <header class="main-header">
+        <div class="main-header">
             <div class="logo">
-                <img src="assets/img/logo/logo.png" alt="Gujarat Yatar Portal">
-                <span class="logo-text">Gujarat Yatar Portal</span>
+                <a href="index.php">
+                    <img src="assets/img/logo/logo.png" alt="Gujarat Yatra Portal">
+                    <span class="logo-text">Gujarat Yatra Portal</span>
+                </a>
             </div>
-            <nav>
-                <ul>
-                    <li><a href="index.php">Home</a></li>
-                    <li><a href="attractions.php">Attractions</a></li>
-                    <li><a href="packages.php">Packages</a></li>
-                    <li><a href="cities.php">Cities</a></li>
+
+            <div class="header-right">
+                <nav class="main-nav">
+                    <ul>
+                        <li><a href="index.php">Home</a></li>
+                        <li><a href="attractions.php">Attractions</a></li>
+                        <li><a href="packages/packages.php">Packages</a></li>
+                        <li><a href="about.php">About Us</a></li>
+                    </ul>
+                </nav>
+
+                <div class="search-container">
+                    <span class="material-symbols-rounded">search</span>
+                    <input type="text" class="search-input" placeholder="Search...">
+                </div>
+
+                <div class="user-actions">
                     <?php if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true): ?>
-                        <li><a href="packages/bookings.php">Bookings</a></li>
-                        <li><a href="reviews.php">Review</a></li>                        
-                        <li><a href="logout.php">Logout</a></li>
+                        <div class="dropdown">
+                            <button class="user-btn"><i class="fas fa-user"></i></button>
+                            <div class="dropdown-content">
+                                <a href="packages/bookings.php">My Bookings</a>
+                                <a href="reviews/reviews.php">My Reviews</a>
+                                <a href="logout.php">Logout</a>
+                            </div>
+                        </div>
                     <?php else: ?>
-                        <li><a href="login.php">Login</a></li>
+                        <a href="login.php" class="btn btn-login">Login</a>
                     <?php endif; ?>
-                    <li><a href="about.php">About Us</a></li>
-                </ul>
-            </nav>
-            <div class="search-icon">
-                <i class="fas fa-search"></i>
+                </div>
+
+                <div class="mobile-menu-icon">
+                    <i class="fas fa-bars"></i>
+                </div>
             </div>
         </div>
     </header>

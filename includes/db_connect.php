@@ -2,7 +2,9 @@
 $host = 'localhost';
 $user = 'root';
 $password = '';
-$database = 'traveldb';
+
+$database = 'ai';
+$database = 'yatra-portal';
 
 $conn = mysqli_connect($host, $user, $password, $database);
  
