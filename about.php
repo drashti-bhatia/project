@@ -13,8 +13,6 @@ $page_title = "About Us - Gujarat Yatar Portal";
 </head>
 
 <body>
-    <?php include "header.php"; ?>
-
     <section class="about-hero">
         <div class="container">
             <h1>About Gujarat Yatar Portal</h1>

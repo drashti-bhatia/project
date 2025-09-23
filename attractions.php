@@ -200,7 +200,7 @@ $attractions_result = mysqli_query($conn, $attractions_sql);
                             <p><?php echo htmlspecialchars(substr($row['description'], 0, 100)); ?>...</p>
                             <div class="attraction-meta">
                                 <span class="entry-fee">Fee: ₹<?php echo htmlspecialchars($row['entry_fee']); ?></span>
-                                <a href="attraction-detail.php?id=<?php echo $row['attraction_id']; ?>" class="btn" style="padding: 8px 20px;">View Details</a>
+                                <a href="city-detail.php?id=<?php echo $row['attraction_id']; ?>" class="btn" style="padding: 8px 20px;">View Details</a>
                             </div>
                         </div>
                     </div>
