@@ -4,7 +4,7 @@ $user = 'root';
 $password = '';
 
 $database = 'ai';
-$database = 'yatra-portal';
+$database = 'yatra_portal';
 
 $conn = mysqli_connect($host, $user, $password, $database);
  

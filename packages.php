@@ -184,7 +184,7 @@ $cities_result = mysqli_query($conn, $cities_sql);
     
     <section class="filter-section">
         <div class="container">
-            <h2 style="text-align: center; margin-bottom: 30px; color: #333;">Find Your Perfect Trip</h2>
+            <h2 style="text-align: center; margin-bottom: 30px; color: #333; font-size: 35px;">Find Your Perfect Trip</h2>
             <form class="filter-form" method="GET" action="packages.php">
                 <select name="destination">
                     <option value="">All Destinations</option>
