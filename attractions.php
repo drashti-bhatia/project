@@ -25,6 +25,7 @@ $attractions_result = mysqli_query($conn, $attractions_sql);
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -33,42 +34,42 @@ $attractions_result = mysqli_query($conn, $attractions_sql);
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         .attractions-hero {
-            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('assets/img/destinations-bg.jpg');
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('assets/img/destinations-bg.jpg');
             background-size: cover;
             background-position: center;
             padding: 100px 0;
             text-align: center;
             color: white;
         }
-        
+
         .attractions-hero h1 {
             font-size: 3rem;
             margin-bottom: 20px;
         }
 
         .attractions-section {
-            padding: 50px 5%;
-            background-color: #f1f5f8;
+            padding: 50px auto;
             min-height: 80vh;
         }
 
         .attractions-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
             gap: 30px;
         }
 
         .attraction-card {
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
             width: 100%;
-            padding: 20px;
             transition: transform 0.3s;
             background-color: #fff;
             border-radius: 15px;
             display: flex;
+            padding: 8px;
             flex-direction: column;
             text-align: center;
         }
+
         .attraction-card img {
             width: 100%;
             height: 200px;
@@ -76,7 +77,7 @@ $attractions_result = mysqli_query($conn, $attractions_sql);
             border-radius: 10px;
             margin-bottom: 15px;
         }
-        
+
         .attraction-content {
             padding: 0 5px;
             display: flex;
@@ -86,6 +87,7 @@ $attractions_result = mysqli_query($conn, $attractions_sql);
 
         .attraction-card h3 {
             font-size: 1.5rem;
+            margin-left: 12px;
             margin-bottom: 5px;
             color: #000000;
             text-align: left;
@@ -95,12 +97,10 @@ $attractions_result = mysqli_query($conn, $attractions_sql);
             font-size: 1rem;
             color: #666;
             margin-bottom: 15px;
-            text-align: left;
         }
 
         .attraction-card p {
-            height: fit-content;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
             flex-grow: 1;
             text-align: left;
         }
@@ -111,6 +111,7 @@ $attractions_result = mysqli_query($conn, $attractions_sql);
 
         .attraction-meta {
             display: flex;
+            width: 100%;
             justify-content: space-between;
             align-items: center;
             margin-top: auto;
@@ -119,8 +120,8 @@ $attractions_result = mysqli_query($conn, $attractions_sql);
         .entry-fee {
             background: #FF6B35;
             color: white;
-            padding: 7px;
-            border-radius: 40px;
+            padding: 5px 10px;
+            border-radius: 20px;
             font-size: 0.9rem;
         }
 
@@ -143,19 +144,7 @@ $attractions_result = mysqli_query($conn, $attractions_sql);
             font-size: 1rem;
             cursor: pointer;
         }
-        
-        .btn {
-            display: inline-block;
-            padding: 12px 30px;
-            background: #3685fb;
-            color: white;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s;
-            border: 2px solid transparent;
-            cursor: pointer;
-        }
+
         .btn:hover {
             background-color: #FF6B35;
             transform: translateY(-3px);
@@ -163,18 +152,20 @@ $attractions_result = mysqli_query($conn, $attractions_sql);
         }
     </style>
 </head>
+
 <body>
 
-<section class="attractions-hero">
-    <div class="container">
-        <h1>Explore Gujarat's Best Attractions</h1>
-        <p>Discover the rich cultural heritage and hidden gems of Gujarat.</p>
-    </div>
-</section>
+    <section class="attractions-hero">
+        <div class="container">
+            <h1>Explore Gujarat's Best Attractions</h1>
+            <p>Discover the rich cultural heritage and hidden gems of Gujarat.</p>
+        </div>
+    </section>
 
-<section class="attractions-section">
-    <div class="container">
-        <h2 class="section-title" style="margin-bottom: 40px;">Explore Attractions</h2>
+    <div class="bg-pattern">
+        <section class="attractions-section">
+            <div class="container">
+                <h2 class="section-title" style="margin-bottom: 40px;padding-top: 30px;">Explore Attractions</h2>
 
         <div class="filter-section">
             <label for="city-filter">Filter by City:</label>
@@ -193,13 +184,17 @@ $attractions_result = mysqli_query($conn, $attractions_sql);
             <?php if (mysqli_num_rows($attractions_result) > 0): ?>
                 <?php while ($row = mysqli_fetch_assoc($attractions_result)): ?>
                     <div class="attraction-card">
-                        <img src="assets/images/attractions/<?php echo htmlspecialchars($row['image_url']); ?>" alt="<?php echo htmlspecialchars($row['name']); ?>">
+                        <img src="assets/img/attractions/<?php echo htmlspecialchars($row['image_url']); ?>" alt="<?php echo htmlspecialchars($row['name']); ?>">
                         <div class="attraction-content">
                             <h3><?php echo htmlspecialchars($row['name']); ?></h3>
                             <span class="city-name"><?php echo htmlspecialchars($row['city_name']); ?></span>
                             <p><?php echo htmlspecialchars(substr($row['description'], 0, 100)); ?>...</p>
+                            <div class="attraction-details">
+                                <p><strong>Best Time:</strong> <?php echo htmlspecialchars($row['best_time_to_visit']); ?></p>
+                                <p><strong>Hours:</strong> <?php echo htmlspecialchars($row['opening_hours']); ?></p>
+                            </div>
                             <div class="attraction-meta">
-                                <span class="entry-fee">Fee: ₹<?php echo htmlspecialchars($row['entry_fee']); ?></span>
+                                <span class="entry-fee">Entry Fee: ₹<?php echo htmlspecialchars($row['entry_fee']); ?></span>
                                 <a href="city-detail.php?id=<?php echo $row['attraction_id']; ?>" class="btn" style="padding: 8px 20px;">View Details</a>
                             </div>
                         </div>
@@ -219,6 +214,7 @@ $attractions_result = mysqli_query($conn, $attractions_sql);
     }
 </script>
 
-<?php include 'includes/footer.php'; ?>
+    <?php include 'includes/footer.php'; ?>
 </body>
+
 </html>

@@ -1,9 +1,8 @@
 <?php
-session_start();
 include('includes/db_connect.php');
 include('header.php');
 
-$page_title = "Cities - Gujarat Yatar Portal";
+$page_title = "Cities - Gujarat Yatra Portal";
 
 // Fetch all cities from the database
 $cities_sql = "SELECT * FROM cities ORDER BY city_name ASC";
