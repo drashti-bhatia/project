@@ -16,6 +16,6 @@ if (!isset($_SESSION)) {
     <h2>Gujarat Yatra Portal - Admin Panel</h2>
     <div class="header-welcome">
         <span>Welcome, <?php echo $_SESSION['admin_username'] ?? 'Admin'; ?></span>
-        <a href="logout.php">Logout</a>
+        <a href="../logout.php">Logout</a>
     </div>
 </header>

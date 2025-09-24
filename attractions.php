@@ -195,7 +195,7 @@ $attractions_result = mysqli_query($conn, $attractions_sql);
                             </div>
                             <div class="attraction-meta">
                                 <span class="entry-fee">Entry Fee: ₹<?php echo htmlspecialchars($row['entry_fee']); ?></span>
-                                <a href="city-detail.php?id=<?php echo $row['attraction_id']; ?>" class="btn" style="padding: 8px 20px;">View Details</a>
+                                <a href="city-detail.php?id=<?php echo $row['city_id']; ?>" class="btn" style="padding: 8px 20px;">View Details</a>
                             </div>
                         </div>
                     </div>

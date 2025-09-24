@@ -74,7 +74,7 @@ include 'includes/db_connect.php';
         <div class="cards">
             <?php
             // Assuming there is an avg_rating column in your cities table
-            $sql = "SELECT * FROM cities ORDER BY city_id DESC LIMIT 3";
+            $sql = "SELECT * FROM cities ORDER BY city_id LIMIT 3";
             $result = mysqli_query($conn, $sql);
 
             while ($row = mysqli_fetch_assoc($result)) {
@@ -83,7 +83,7 @@ include 'includes/db_connect.php';
                 echo '<h3>' . $row['city_name'] . '</h3>';
                 echo '<p>' . substr($row['description'], 0, 100) . '...</p>';
                 echo '<p><strong> Best Time to Visit : ' . $row['best_time_to_visit'] . '</strong></p>';
-                echo '<a href="destinations.php?city_id=' . $row['city_id'] . '" class="btn" ">Explore</a>';
+                echo '<a href="city-detail.php?id=' . $row['city_id'] . '" class="btn">Explore</a>';
                 echo '</div>';
             }
             ?>
@@ -104,7 +104,7 @@ include 'includes/db_connect.php';
         </div>
         <div class="cards">
             <?php
-            $sql = "SELECT * FROM packages ORDER BY package_id DESC LIMIT 3";
+            $sql = "SELECT * FROM packages ORDER BY package_id LIMIT 3";
             $result = mysqli_query($conn, $sql);
 
             while ($row = mysqli_fetch_assoc($result)) {
@@ -115,7 +115,7 @@ include 'includes/db_connect.php';
                 echo '<p><strong>₹' . $row['price'] . ' per person</strong></p>';
 
                 if (isset($_SESSION['loggedin'])) {
-                    echo '<a href="packages/package_detail.php?id=' . $row['package_id'] . '" class="btn" style="padding: 8px 20px; margin-top: 10px;">View Details</a>';
+                    echo '<a href="package-detail.php?id=' . $row['package_id'] . '" class="btn" style="padding: 8px 20px; margin-top: 10px;">View Details</a>';
                 } else {
                     echo '<a href="login.php" class="btn" style="padding: 10px 80px; margin-top: 10px;">Login to Book</a>';
                 }
@@ -145,8 +145,8 @@ include 'includes/db_connect.php';
                 LEFT JOIN users u ON r.user_id = u.user_id 
                 LEFT JOIN packages p ON r.package_id = p.package_id 
                 LEFT JOIN attractions a ON r.attraction_id = a.attraction_id
-                ORDER BY r.date_posted DESC 
-                LIMIT 3";
+                ORDER BY r.date_posted
+                LIMIT 2";
             $result = mysqli_query($conn, $sql);
 
             while ($row = mysqli_fetch_assoc($result)) {
@@ -176,7 +176,7 @@ include 'includes/db_connect.php';
                     style="display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;">
                     <h3 style="color: #FF6B35; margin-bottom: 15px;">Share Your Experience</h3>
                     <p style="margin-bottom: 20px;">Have you traveled with us? Leave a review!</p>
-                    <a href="reviews/submit_review.php" class="btn" style="padding: 8px 20px;">Write a Review</a>
+                    <a href="reviews.php" class="btn" style="padding: 8px 20px;">Write a Review</a>
                 </div>
             <?php endif; ?>
         </div>

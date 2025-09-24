@@ -46,7 +46,7 @@ session_start();
                             <div class="dropdown">
                                 <button class="user-btn"><i class="fas fa-user"></i></button>
                                 <div class="dropdown-content">
-                                    <a href="packages/bookings.php">My Bookings</a>
+                                    <a href="my_bookings.php">My Bookings</a>
                                     <a href="reviews.php">My Reviews</a>
                                     <a href="logout.php">Logout</a>
                                 </div>

@@ -268,7 +268,7 @@ $cities_result = mysqli_query($conn, $cities_sql);
                             <div class="package-meta">
                                 <span class="duration"><?php echo $package['duration_days']; ?> Days</span>
                                 <?php if (isset($_SESSION['user_id'])): ?>
-                                    <a href="book.php?package_id=<?php echo $package['package_id']; ?>" class="btn">Book Now</a>
+                                    <a href="package-detail.php?id=<?php echo $package['package_id']; ?>" class="btn">View Details</a>
                                 <?php else: ?>
                                     <a href="login.php" class="btn">Login to Book</a>
                                 <?php endif; ?>
