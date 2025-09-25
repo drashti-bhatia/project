@@ -7,9 +7,9 @@ include 'includes/db_connect.php';
     <section class="hero" style="padding-top: 25px;">
         <div class="slider-container">
             <div class="slider-wrapper">
-                <div class="slide active" style="background-image: url('assets/img/bg/slider1.webp')">
+                <div class="slide active" style="background-image: url('assets/img/bg/slider1.jpg')">
                 </div>
-                <div class="slide" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('assets/img/bg/slider2.webp')">
+                <div class="slide" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('assets/img/bg/slider2.jpeg')">
                     <div class="slide-content">
                         <h2>
                             Statue of Unity - A Symbol of Unity
@@ -20,14 +20,14 @@ include 'includes/db_connect.php';
                     </div>
                 </div>
 
-                <div class="slide" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('assets/img/bg/slider3.webp')">
+                <div class="slide" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('assets/img/bg/slider3.jpeg')">
                     <div class="slide-content">
                         <h2>Rann of Kutch - A White Desert Wonderland</h2>
                         <p>A mesmerizing white salt desert that hosts the vibrant Rann Utsav festival and is home to unique wildlife.</p>
                     </div>
                 </div>
 
-                <div class="slide" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('assets/img/bg/slider4.webp')">
+                <div class="slide" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('assets/img/bg/slider4.jpeg')">
                     <div class="slide-content">
                         <h2>Modhera Sun Temple - An Architectural Marvel</h2>
                         <p>An architectural marvel in Gujarat, this 11th-century temple is dedicated to the sun god Surya. The intricate carvings and a grand stepwell make it a stunning example of ancient Indian artistry.</p>
@@ -41,16 +41,8 @@ include 'includes/db_connect.php';
                     </div>
                 </div>
 
-                <button class="arrow prev" onclick="changeSlide(-1)">
-                    <span class="material-symbols-rounded">
-                        arrow_back
-                    </span>
-                </button>
-                <button class="arrow next" onclick="changeSlide(1)">
-                    <span class="material-symbols-rounded">
-                        arrow_forward
-                    </span>
-                </button>
+            <button class="arrow prev" onclick="changeSlide(-1)">‹</button>
+            <button class="arrow next" onclick="changeSlide(1)">›</button>
 
                 <div class="navigation">
                     <div class="nav-dot active" onclick="currentSlide(1)"></div>
@@ -81,19 +73,17 @@ include 'includes/db_connect.php';
 
         <div class="cards">
             <?php
+            // Assuming there is an avg_rating column in your cities table
             $sql = "SELECT * FROM cities ORDER BY city_id LIMIT 3";
             $result = mysqli_query($conn, $sql);
 
             while ($row = mysqli_fetch_assoc($result)) {
-                echo '<div class="card">'; // Reverted to original class
+                echo '<div class="card glass">';
                 echo '<img src="assets/img/cities/' . $row['image_url'] . '" alt="' . $row['city_name'] . '">';
-                // ADDED: card-body wrapper for flexbox styling
-                echo '<div class="card-body">';
                 echo '<h3>' . $row['city_name'] . '</h3>';
                 echo '<p>' . substr($row['description'], 0, 100) . '...</p>';
                 echo '<p><strong> Best Time to Visit : ' . $row['best_time_to_visit'] . '</strong></p>';
                 echo '<a href="city-detail.php?id=' . $row['city_id'] . '" class="btn">Explore</a>';
-                echo '</div>'; // end card-body
                 echo '</div>';
             }
             ?>
@@ -118,22 +108,18 @@ include 'includes/db_connect.php';
             $result = mysqli_query($conn, $sql);
 
             while ($row = mysqli_fetch_assoc($result)) {
-                echo '<div class="card">'; // Reverted to original class
+                echo '<div class="card glass">';
                 echo '<img src="assets/img/packages/' . $row['image_url'] . '" alt="' . $row['name'] . '">';
-                // ADDED: card-body wrapper for flexbox styling
-                echo '<div class="card-body">';
                 echo '<h3>' . $row['name'] . '</h3>';
                 echo '<p>Duration: ' . $row['duration_days'] . ' days</p>';
                 echo '<p><strong>₹' . $row['price'] . ' per person</strong></p>';
 
                 if (isset($_SESSION['loggedin'])) {
-                    // REMOVED inline styles for consistency
-                    echo '<a href="package-detail.php?id=' . $row['package_id'] . '" class="btn">View Details</a>';
+                    echo '<a href="package-detail.php?id=' . $row['package_id'] . '" class="btn" style="padding: 8px 20px; margin-top: 10px;">View Details</a>';
                 } else {
-                    // REMOVED inline styles for consistency
-                    echo '<a href="login.php" class="btn">Login to Book</a>';
+                    echo '<a href="login.php" class="btn" style="padding: 10px 80px; margin-top: 10px;">Login to Book</a>';
                 }
-                echo '</div>'; // end card-body
+
                 echo '</div>';
             }
             ?>
@@ -164,7 +150,7 @@ include 'includes/db_connect.php';
             $result = mysqli_query($conn, $sql);
 
             while ($row = mysqli_fetch_assoc($result)) {
-                echo '<div class="card glass" style="text-align: left; padding: 14px;">';
+                echo '<div class="card glass" style="text-align: left; padding: 5px;">';
                 echo '<div style="display: flex; align-items: center; margin: 10px;">';
                 echo '<div style="width: 40px; height: 40px; background: #35e1ffff; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 15px; color: white; font-weight: bold;">';
                 echo substr($row['username'], 0, 1);
