@@ -172,8 +172,4 @@ $result = mysqli_stmt_get_result($stmt);
 
     <?php include 'includes/footer.php'; ?>
 </body>
-<<<<<<< HEAD
-
-=======
->>>>>>> main
 </html>
