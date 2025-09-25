@@ -50,6 +50,7 @@ $attractions_result = mysqli_query($conn, $attractions_sql);
         .attractions-section {
             padding: 50px auto;
             min-height: 80vh;
+            margin-bottom: 50px;
         }
 
         .attractions-grid {
@@ -59,7 +60,7 @@ $attractions_result = mysqli_query($conn, $attractions_sql);
         }
 
         .attraction-card {
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 10px 20px rgba(0, 0, 0, 0.05);
             width: 100%;
             transition: transform 0.3s;
             background-color: #fff;
@@ -67,19 +68,19 @@ $attractions_result = mysqli_query($conn, $attractions_sql);
             display: flex;
             padding: 8px;
             flex-direction: column;
-            text-align: center;
+            overflow: hidden;
+            border: 1px solid #EAEAEA;
         }
 
         .attraction-card img {
             width: 100%;
             height: 200px;
             object-fit: cover;
-            border-radius: 10px;
-            margin-bottom: 15px;
+            margin-bottom: 0;
         }
 
         .attraction-content {
-            padding: 0 5px;
+            padding: 25px;
             display: flex;
             flex-direction: column;
             flex-grow: 1;
@@ -103,6 +104,12 @@ $attractions_result = mysqli_query($conn, $attractions_sql);
             margin-bottom: 15px;
             flex-grow: 1;
             text-align: left;
+            color: #555;
+            line-height: 1.6;
+        }
+
+        .attraction-description {
+            flex-grow: 1;
         }
 
         .attraction-card:hover {
@@ -114,7 +121,7 @@ $attractions_result = mysqli_query($conn, $attractions_sql);
             width: 100%;
             justify-content: space-between;
             align-items: center;
-            margin-top: auto;
+            margin-top: 15px;
         }
 
         .entry-fee {
@@ -123,6 +130,15 @@ $attractions_result = mysqli_query($conn, $attractions_sql);
             padding: 5px 10px;
             border-radius: 20px;
             font-size: 0.9rem;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        /* MODIFIED: Removed fixed width to match the packages page style */
+        .attraction-meta .btn {
+            padding: 10px 25px;
+            margin: 0;
+            font-size: 0.95rem;
         }
 
         .filter-section {
@@ -197,24 +213,29 @@ $attractions_result = mysqli_query($conn, $attractions_sql);
                                 <span class="entry-fee">Entry Fee: ₹<?php echo htmlspecialchars($row['entry_fee']); ?></span>
                                 <a href="city-detail.php?id=<?php echo $row['city_id']; ?>" class="btn" style="padding: 8px 20px;">View Details</a>
                             </div>
-                        </div>
-                    </div>
-                <?php endwhile; ?>
-            <?php else: ?>
-                <p style="text-align: center; width: 100%;">No attractions found.</p>
-            <?php endif; ?>
-        </div>
-    </div>
-</section>
+                        <?php endwhile; ?>
+                    <?php else: ?>
+                        <p style="text-align: center; width: 100%;">No attractions found.</p>
+                    <?php endif; ?>
+                </div>
+            </div>
+        </section>
 
-<script>
-    function filterAttractions() {
-        const cityId = document.getElementById('city-filter').value;
-        window.location.href = 'attractions.php' + (cityId ? '?city_id=' + cityId : '');
-    }
-</script>
+        <script>
+            function filterAttractions() {
+                const cityId = document.getElementById('city-filter').value;
+                window.location.href = 'attractions.php' + (cityId ? '?city_id=' + cityId : '');
+            }
+        </script>
 
+<<<<<<< HEAD
+        <?php include 'includes/footer.php'; ?>
+</body>
+
+</html>
+=======
     <?php include 'includes/footer.php'; ?>
 </body>
 
 </html>
+>>>>>>> main

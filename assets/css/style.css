@@ -59,7 +59,11 @@ header {
     top: 0;
     z-index: 1000;
     width: 100%;
+<<<<<<< HEAD
+    background: rgba(255, 245, 238, 0.152);
+=======
     background: rgba(255, 249, 245, 0.5);
+>>>>>>> main
     box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
     padding: 20px auto;
     backdrop-filter: blur(20px);
@@ -497,29 +501,67 @@ header .search-icon-input {
     background-color: #fff;
     border-radius: 15px;
     text-align: left;
+<<<<<<< HEAD
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+=======
+>>>>>>> main
 }
 
 .card img {
     width: 100%;
+<<<<<<< HEAD
+    margin-bottom: 0;
+=======
     border-radius: 10px 10px 0px 0px;
     margin-bottom: 15px;
+>>>>>>> main
     height: 200px;
     object-fit: cover;
 }
 
+.card-body {
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
+    flex-grow: 1;
+}
+
+/* MODIFIED: Adjusted margins for content inside card-body */
 .card h3 {
     font-size: 1.3rem;
+<<<<<<< HEAD
+    margin: 0 0 10px 0;
+=======
     margin: 5px 15px;
+>>>>>>> main
     color: #000000;
 }
 
 .card p {
     font-size: 1rem;
+<<<<<<< HEAD
+    margin: 0 0 10px 0;
+    line-height: 1.4;
+=======
     margin: 5px 15px;
+>>>>>>> main
 }
 
 .card:hover {
     transform: translateY(-10px);
+<<<<<<< HEAD
+}
+
+.card-body .btn {
+    margin: 0;
+    margin-top: auto;
+    margin-bottom: 2px;
+    padding: 10px 20px;
+    text-align: center;
+=======
+>>>>>>> main
 }
 
 /* ------------------------------------------------login.php-----register.php------------------------------------------ */
