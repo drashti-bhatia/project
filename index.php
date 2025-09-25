@@ -7,9 +7,9 @@ include 'includes/db_connect.php';
     <section class="hero" style="padding-top: 25px;">
         <div class="slider-container">
             <div class="slider-wrapper">
-                <div class="slide active" style="background-image: url('assets/img/bg/slider1.jpg')">
+                <div class="slide active" style="background-image: url('assets/img/bg/slider1.webp')">
                 </div>
-                <div class="slide" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('assets/img/bg/slider2.jpeg')">
+                <div class="slide" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('assets/img/bg/slider2.webp')">
                     <div class="slide-content">
                         <h2>
                             Statue of Unity - A Symbol of Unity
@@ -20,14 +20,14 @@ include 'includes/db_connect.php';
                     </div>
                 </div>
 
-                <div class="slide" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('assets/img/bg/slider3.jpeg')">
+                <div class="slide" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('assets/img/bg/slider3.webp')">
                     <div class="slide-content">
                         <h2>Rann of Kutch - A White Desert Wonderland</h2>
                         <p>A mesmerizing white salt desert that hosts the vibrant Rann Utsav festival and is home to unique wildlife.</p>
                     </div>
                 </div>
 
-                <div class="slide" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('assets/img/bg/slider4.jpeg')">
+                <div class="slide" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('assets/img/bg/slider4.webp')">
                     <div class="slide-content">
                         <h2>Modhera Sun Temple - An Architectural Marvel</h2>
                         <p>An architectural marvel in Gujarat, this 11th-century temple is dedicated to the sun god Surya. The intricate carvings and a grand stepwell make it a stunning example of ancient Indian artistry.</p>
@@ -41,8 +41,16 @@ include 'includes/db_connect.php';
                     </div>
                 </div>
 
-            <button class="arrow prev" onclick="changeSlide(-1)">‹</button>
-            <button class="arrow next" onclick="changeSlide(1)">›</button>
+                <button class="arrow prev" onclick="changeSlide(-1)">
+                    <span class="material-symbols-rounded">
+                        arrow_back
+                    </span>
+                </button>
+                <button class="arrow next" onclick="changeSlide(1)">
+                    <span class="material-symbols-rounded">
+                        arrow_forward
+                    </span>
+                </button>
 
                 <div class="navigation">
                     <div class="nav-dot active" onclick="currentSlide(1)"></div>
@@ -73,17 +81,26 @@ include 'includes/db_connect.php';
 
         <div class="cards">
             <?php
-            // Assuming there is an avg_rating column in your cities table
             $sql = "SELECT * FROM cities ORDER BY city_id LIMIT 3";
             $result = mysqli_query($conn, $sql);
 
             while ($row = mysqli_fetch_assoc($result)) {
-                echo '<div class="card glass">';
+                echo '<div class="card">';
+
                 echo '<img src="assets/img/cities/' . $row['image_url'] . '" alt="' . $row['city_name'] . '">';
+
+                echo '<div class="card-body">';
+
                 echo '<h3>' . $row['city_name'] . '</h3>';
-                echo '<p>' . substr($row['description'], 0, 100) . '...</p>';
+
+                echo '<p class="card-text">' . $row['description'] . '</p>';
+
                 echo '<p><strong> Best Time to Visit : ' . $row['best_time_to_visit'] . '</strong></p>';
+
                 echo '<a href="city-detail.php?id=' . $row['city_id'] . '" class="btn">Explore</a>';
+
+                echo '</div>';
+
                 echo '</div>';
             }
             ?>
@@ -108,18 +125,26 @@ include 'includes/db_connect.php';
             $result = mysqli_query($conn, $sql);
 
             while ($row = mysqli_fetch_assoc($result)) {
-                echo '<div class="card glass">';
+                echo '<div class="card">';
+
                 echo '<img src="assets/img/packages/' . $row['image_url'] . '" alt="' . $row['name'] . '">';
+
+                echo '<div class="card-body">';
+
                 echo '<h3>' . $row['name'] . '</h3>';
+
+                // MODIFIED: Removed the 'card-text' class to allow natural height
                 echo '<p>Duration: ' . $row['duration_days'] . ' days</p>';
+
                 echo '<p><strong>₹' . $row['price'] . ' per person</strong></p>';
 
                 if (isset($_SESSION['loggedin'])) {
-                    echo '<a href="package-detail.php?id=' . $row['package_id'] . '" class="btn" style="padding: 8px 20px; margin-top: 10px;">View Details</a>';
+                    echo '<a href="package-detail.php?id=' . $row['package_id'] . '" class="btn">View Details</a>';
                 } else {
-                    echo '<a href="login.php" class="btn" style="padding: 10px 80px; margin-top: 10px;">Login to Book</a>';
+                    echo '<a href="login.php" class="btn">Login to Book</a>';
                 }
 
+                echo '</div>';
                 echo '</div>';
             }
             ?>
@@ -145,26 +170,25 @@ include 'includes/db_connect.php';
                 LEFT JOIN users u ON r.user_id = u.user_id 
                 LEFT JOIN packages p ON r.package_id = p.package_id 
                 LEFT JOIN attractions a ON r.attraction_id = a.attraction_id
-                ORDER BY r.date_posted
+                ORDER BY r.date_posted DESC
                 LIMIT 2";
             $result = mysqli_query($conn, $sql);
 
+            // MODIFIED: This entire loop is refactored to use CSS classes instead of inline styles
             while ($row = mysqli_fetch_assoc($result)) {
-                echo '<div class="card glass" style="text-align: left; padding: 5px;">';
-                echo '<div style="display: flex; align-items: center; margin: 10px;">';
-                echo '<div style="width: 40px; height: 40px; background: #35e1ffff; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 15px; color: white; font-weight: bold;">';
-                echo substr($row['username'], 0, 1);
-                echo '</div>';
-                echo '<div>';
-                echo '<h4 style="margin: 0;">' . $row['username'] . '</h4>';
-                echo '<div style="color: #FFA500;">';
+                echo '<div class="card review-card">';
+                echo '<div class="review-card__header">';
+                echo '<div class="review-card__avatar">' . substr($row['username'], 0, 1) . '</div>';
+                echo '<div class="review-card__author">';
+                echo '<h4>' . htmlspecialchars($row['username']) . '</h4>';
+                echo '<div class="review-card__rating">';
                 echo str_repeat('★', $row['rating']) . str_repeat('☆', 5 - $row['rating']);
                 echo '</div>';
                 echo '</div>';
                 echo '</div>';
-                echo '<p>"' . $row['comment'] . '"</p>';
-                echo '<div style="font-size: 0.9rem; color: #353333;; margin-top: auto;">';
-                echo '<p>' . ($row['package_name'] ? 'Package: ' . $row['package_name'] : 'Attraction: ' . $row['attraction_name']) . '</p>';
+                echo '<p class="review-card__comment">"' . htmlspecialchars($row['comment']) . '"</p>';
+                echo '<div class="review-card__footer">';
+                echo '<p>' . ($row['package_name'] ? 'Package: ' . htmlspecialchars($row['package_name']) : 'Attraction: ' . htmlspecialchars($row['attraction_name'])) . '</p>';
                 echo '<p>' . date('M j, Y', strtotime($row['date_posted'])) . '</p>';
                 echo '</div>';
                 echo '</div>';
@@ -172,15 +196,15 @@ include 'includes/db_connect.php';
             ?>
 
             <?php if (isset($_SESSION['user_id'])): ?>
-                <div class="card glass"
-                    style="display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;">
-                    <h3 style="color: #FF6B35; margin-bottom: 15px;">Share Your Experience</h3>
-                    <p style="margin-bottom: 20px;">Have you traveled with us? Leave a review!</p>
-                    <a href="reviews.php" class="btn" style="padding: 8px 20px;">Write a Review</a>
+                <div class="card card--prompt">
+                    <h3>Share Your Experience</h3>
+                    <p>Have you traveled with us? Leave a review!</p>
+                    <a href="reviews.php" class="btn">Write a Review</a>
                 </div>
             <?php endif; ?>
         </div>
     </section>
+
 </div>
 
 <?php include "includes/footer.php" ?>

@@ -48,9 +48,8 @@ $attractions_result = mysqli_query($conn, $attractions_sql);
         }
 
         .attractions-section {
-            padding: 50px auto;
+            padding: 50px 5%;
             min-height: 80vh;
-            margin-bottom: 50px;
         }
 
         .attractions-grid {
@@ -62,21 +61,23 @@ $attractions_result = mysqli_query($conn, $attractions_sql);
         .attraction-card {
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 10px 20px rgba(0, 0, 0, 0.05);
             width: 100%;
-            transition: transform 0.3s;
+            transition: transform 0.3s ease;
             background-color: #fff;
             border-radius: 15px;
             display: flex;
-            padding: 8px;
             flex-direction: column;
             overflow: hidden;
             border: 1px solid #EAEAEA;
         }
 
+        .attraction-card:hover {
+            transform: translateY(-5px);
+        }
+
         .attraction-card img {
             width: 100%;
-            height: 200px;
+            height: 220px;
             object-fit: cover;
-            margin-bottom: 0;
         }
 
         .attraction-content {
@@ -88,9 +89,8 @@ $attractions_result = mysqli_query($conn, $attractions_sql);
 
         .attraction-card h3 {
             font-size: 1.5rem;
-            margin-left: 12px;
             margin-bottom: 5px;
-            color: #000000;
+            color: #333;
             text-align: left;
         }
 
@@ -98,43 +98,46 @@ $attractions_result = mysqli_query($conn, $attractions_sql);
             font-size: 1rem;
             color: #666;
             margin-bottom: 15px;
+            text-align: left;
         }
 
         .attraction-card p {
-            margin-bottom: 15px;
-            flex-grow: 1;
             text-align: left;
             color: #555;
             line-height: 1.6;
+            margin-bottom: 10px;
         }
 
+        /* MODIFIED: This rule correctly makes ONLY the description expand */
         .attraction-description {
             flex-grow: 1;
         }
 
-        .attraction-card:hover {
-            transform: translateY(-10px);
+        .attraction-details {
+            margin-top: auto;
+            /* Pushes details to be right above the meta section */
+            padding-top: 10px;
         }
 
         .attraction-meta {
             display: flex;
-            width: 100%;
             justify-content: space-between;
             align-items: center;
             margin-top: 15px;
         }
 
+        /* MODIFIED: Styled to match the 'duration' tag from packages.php */
         .entry-fee {
-            background: #FF6B35;
-            color: white;
-            padding: 5px 10px;
-            border-radius: 20px;
+            background: #f9f2eeff;
+            color: #983b3bff;
+            padding: 8px 15px;
+            border-radius: 50px;
             font-size: 0.9rem;
             font-weight: 600;
             white-space: nowrap;
         }
 
-        /* MODIFIED: Removed fixed width to match the packages page style */
+        /* MODIFIED: Styled to match the button from packages.php */
         .attraction-meta .btn {
             padding: 10px 25px;
             margin: 0;
@@ -160,12 +163,6 @@ $attractions_result = mysqli_query($conn, $attractions_sql);
             font-size: 1rem;
             cursor: pointer;
         }
-
-        .btn:hover {
-            background-color: #FF6B35;
-            transform: translateY(-3px);
-            color: white;
-        }
     </style>
 </head>
 
@@ -183,35 +180,39 @@ $attractions_result = mysqli_query($conn, $attractions_sql);
             <div class="container">
                 <h2 class="section-title" style="margin-bottom: 40px;padding-top: 30px;">Explore Attractions</h2>
 
-        <div class="filter-section">
-            <label for="city-filter">Filter by City:</label>
-            <select id="city-filter" onchange="filterAttractions()">
-                <option value="">All Cities</option>
-                <?php mysqli_data_seek($cities_result, 0); ?>
-                <?php while ($city_row = mysqli_fetch_assoc($cities_result)): ?>
-                    <option value="<?php echo $city_row['city_id']; ?>" <?php echo ($city_filter == $city_row['city_id']) ? 'selected' : ''; ?>>
-                        <?php echo $city_row['city_name']; ?>
-                    </option>
-                <?php endwhile; ?>
-            </select>
-        </div>
-        
-        <div class="attractions-grid">
-            <?php if (mysqli_num_rows($attractions_result) > 0): ?>
-                <?php while ($row = mysqli_fetch_assoc($attractions_result)): ?>
-                    <div class="attraction-card">
-                        <img src="assets/img/attractions/<?php echo htmlspecialchars($row['image_url']); ?>" alt="<?php echo htmlspecialchars($row['name']); ?>">
-                        <div class="attraction-content">
-                            <h3><?php echo htmlspecialchars($row['name']); ?></h3>
-                            <span class="city-name"><?php echo htmlspecialchars($row['city_name']); ?></span>
-                            <p><?php echo htmlspecialchars(substr($row['description'], 0, 100)); ?>...</p>
-                            <div class="attraction-details">
-                                <p><strong>Best Time:</strong> <?php echo htmlspecialchars($row['best_time_to_visit']); ?></p>
-                                <p><strong>Hours:</strong> <?php echo htmlspecialchars($row['opening_hours']); ?></p>
-                            </div>
-                            <div class="attraction-meta">
-                                <span class="entry-fee">Entry Fee: ₹<?php echo htmlspecialchars($row['entry_fee']); ?></span>
-                                <a href="city-detail.php?id=<?php echo $row['city_id']; ?>" class="btn" style="padding: 8px 20px;">View Details</a>
+                <div class="filter-section">
+                    <label for="city-filter">Filter by City:</label>
+                    <select id="city-filter" onchange="filterAttractions()">
+                        <option value="">All Cities</option>
+                        <?php mysqli_data_seek($cities_result, 0); ?>
+                        <?php while ($city_row = mysqli_fetch_assoc($cities_result)): ?>
+                            <option value="<?php echo $city_row['city_id']; ?>" <?php echo ($city_filter == $city_row['city_id']) ? 'selected' : ''; ?>>
+                                <?php echo $city_row['city_name']; ?>
+                            </option>
+                        <?php endwhile; ?>
+                    </select>
+                </div>
+
+                <div class="attractions-grid">
+                    <?php if (mysqli_num_rows($attractions_result) > 0): ?>
+                        <?php while ($row = mysqli_fetch_assoc($attractions_result)): ?>
+                            <div class="attraction-card">
+                                <img src="assets/img/attractions/<?php echo htmlspecialchars($row['image_url']); ?>" alt="<?php echo htmlspecialchars($row['name']); ?>">
+                                <div class="attraction-content">
+                                    <h3><?php echo htmlspecialchars($row['name']); ?></h3>
+                                    <span class="city-name"><?php echo htmlspecialchars($row['city_name']); ?></span>
+
+                                    <p class="attraction-description"><?php echo htmlspecialchars($row['description']); ?></p>
+
+                                    <div class="attraction-details">
+                                        <p><strong>Best Time:</strong> <?php echo htmlspecialchars($row['best_time_to_visit']); ?></p>
+                                        <p><strong>Hours:</strong> <?php echo htmlspecialchars($row['opening_hours']); ?></p>
+                                    </div>
+                                    <div class="attraction-meta">
+                                        <span class="entry-fee">Entry Fee: ₹<?php echo htmlspecialchars($row['entry_fee']); ?></span>
+                                        <a href="city-detail.php?id=<?php echo $row['city_id']; ?>" class="btn">View Details</a>
+                                    </div>
+                                </div>
                             </div>
                         <?php endwhile; ?>
                     <?php else: ?>
@@ -220,22 +221,16 @@ $attractions_result = mysqli_query($conn, $attractions_sql);
                 </div>
             </div>
         </section>
+    </div>
 
-        <script>
-            function filterAttractions() {
-                const cityId = document.getElementById('city-filter').value;
-                window.location.href = 'attractions.php' + (cityId ? '?city_id=' + cityId : '');
-            }
-        </script>
+    <script>
+        function filterAttractions() {
+            const cityId = document.getElementById('city-filter').value;
+            window.location.href = 'attractions.php' + (cityId ? '?city_id=' + cityId : '');
+        }
+    </script>
 
-<<<<<<< HEAD
-        <?php include 'includes/footer.php'; ?>
-</body>
-
-</html>
-=======
     <?php include 'includes/footer.php'; ?>
 </body>
 
 </html>
->>>>>>> main

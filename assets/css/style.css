@@ -59,11 +59,8 @@ header {
     top: 0;
     z-index: 1000;
     width: 100%;
-<<<<<<< HEAD
     background: rgba(255, 245, 238, 0.152);
-=======
     background: rgba(255, 249, 245, 0.5);
->>>>>>> main
     box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
     padding: 20px auto;
     backdrop-filter: blur(20px);
@@ -501,22 +498,14 @@ header .search-icon-input {
     background-color: #fff;
     border-radius: 15px;
     text-align: left;
-<<<<<<< HEAD
     display: flex;
     flex-direction: column;
     overflow: hidden;
-=======
->>>>>>> main
 }
 
 .card img {
     width: 100%;
-<<<<<<< HEAD
     margin-bottom: 0;
-=======
-    border-radius: 10px 10px 0px 0px;
-    margin-bottom: 15px;
->>>>>>> main
     height: 200px;
     object-fit: cover;
 }
@@ -528,40 +517,118 @@ header .search-icon-input {
     flex-grow: 1;
 }
 
-/* MODIFIED: Adjusted margins for content inside card-body */
 .card h3 {
     font-size: 1.3rem;
-<<<<<<< HEAD
     margin: 0 0 10px 0;
-=======
-    margin: 5px 15px;
->>>>>>> main
     color: #000000;
 }
 
 .card p {
     font-size: 1rem;
-<<<<<<< HEAD
     margin: 0 0 10px 0;
     line-height: 1.4;
-=======
-    margin: 5px 15px;
->>>>>>> main
+}
+
+.card-text {
+    height: 45px;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .card:hover {
     transform: translateY(-10px);
-<<<<<<< HEAD
 }
 
 .card-body .btn {
     margin: 0;
     margin-top: auto;
-    margin-bottom: 2px;
-    padding: 10px 20px;
+    padding: 12px 20px;
     text-align: center;
-=======
->>>>>>> main
+}
+
+.review-card {
+    padding: 25px;
+    height: 100%;
+}
+
+.review-card__header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #eee;
+}
+
+.review-card__avatar {
+    width: 45px;
+    height: 45px;
+    background: var(--orange);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 1.2rem;
+    margin-right: 15px;
+    flex-shrink: 0;
+}
+
+.review-card__author h4 {
+    margin: 0;
+    font-size: 1.1rem;
+    color: #333;
+}
+
+.review-card__rating {
+    color: #FFC107;
+    font-size: 1.1rem;
+}
+
+.review-card__comment {
+    font-style: italic;
+    color: #555;
+    line-height: 1.6;
+    margin-bottom: 15px;
+}
+
+.review-card__footer {
+    font-size: 0.9rem;
+    color: #777;
+    margin-top: auto;
+    padding-top: 15px;
+    border-top: 1px solid #eee;
+}
+
+.review-card__footer p {
+    margin: 0;
+}
+
+.card--prompt {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 25px;
+}
+
+.card--prompt h3 {
+    color: var(--darkblue);
+    margin-bottom: 15px;
+}
+
+.card--prompt p {
+    color: #555;
+    margin-bottom: 20px;
+}
+
+.card--prompt .btn {
+    padding: 10px 25px;
+    /* A more appropriate button size */
+    margin: 0;
 }
 
 /* ------------------------------------------------login.php-----register.php------------------------------------------ */
