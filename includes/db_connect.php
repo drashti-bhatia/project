@@ -3,8 +3,8 @@ $host = 'localhost';
 $user = 'root';
 $password = '';
 
-$database = 'ai';
-$database = 'yatra_portal';
+$database = 'traveldb';
+// $database = 'yatra-portal';
 
 $conn = mysqli_connect($host, $user, $password, $database);
  

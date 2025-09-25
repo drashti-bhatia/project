@@ -1,5 +1,4 @@
 <?php
-session_start();
 $errors = $_SESSION['register_errors'] ?? [];
 $old_input = $_SESSION['old_input'] ?? [];
 unset($_SESSION['register_errors']);

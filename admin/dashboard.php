@@ -14,6 +14,8 @@ $cities_count = 0;
 $attractions_count = 0;
 $packages_count = 0;
 $bookings_count = 0;
+$transport_count = 0; // New variable for transport count
+$reviews_count = 0;   // New variable for reviews count
 
 // Cities count
 $sql = "SELECT COUNT(*) as count FROM cities";
@@ -47,6 +49,26 @@ if ($result) {
     $bookings_count = $row['count'];
 }
 
+// --- START OF NEW CODE ---
+
+// Transport count
+$sql = "SELECT COUNT(*) as count FROM transport_options";
+$result = mysqli_query($conn, $sql);
+if ($result) {
+    $row = mysqli_fetch_assoc($result);
+    $transport_count = $row['count'];
+}
+
+// Reviews count
+$sql = "SELECT COUNT(*) as count FROM reviews";
+$result = mysqli_query($conn, $sql);
+if ($result) {
+    $row = mysqli_fetch_assoc($result);
+    $reviews_count = $row['count'];
+}
+
+// --- END OF NEW CODE ---
+
 // Get recent bookings
 $recent_bookings = array();
 $sql = "SELECT b.booking_id, p.name, b.payment_status 
@@ -63,9 +85,11 @@ if ($result) {
 
 // Get recent reviews
 $recent_reviews = array();
-$sql = "SELECT r.*, p.name as package_name 
+$sql = "SELECT r.*, u.username, p.name as package_name, a.name as attraction_name
         FROM reviews r 
+        LEFT JOIN users u ON r.user_id = u.user_id
         LEFT JOIN packages p ON r.package_id = p.package_id 
+        LEFT JOIN attractions a ON r.attraction_id = a.attraction_id
         ORDER BY r.date_posted DESC 
         LIMIT 3";
 $result = mysqli_query($conn, $sql);
@@ -111,7 +135,16 @@ if ($result) {
                     <h3>Bookings</h3>
                     <p><?php echo $bookings_count; ?></p>
                 </div>
-            </div>
+                
+                <div class="stat-card glass">
+                    <h3>Transport Options</h3>
+                    <p><?php echo $transport_count; ?></p>
+                </div>
+                <div class="stat-card glass">
+                    <h3>Total Reviews</h3>
+                    <p><?php echo $reviews_count; ?></p>
+                </div>
+                </div>
 
             <div class="recent-activity" style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
                 <div class="glass" style="padding: 20px;">
@@ -146,12 +179,12 @@ if ($result) {
                         <?php foreach ($recent_reviews as $review): ?>
                         <div style="padding: 15px; background: rgba(255, 255, 255, 0.3); border-radius: 8px;">
                             <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
-                                <span style="font-weight: 600;"><?php echo $review['user_name']; ?></span>
+                                <span style="font-weight: 600;"><?php echo htmlspecialchars($review['username']); ?></span>
                                 <span style="color: #FFA500;"><?php echo str_repeat('★', $review['rating']) . str_repeat('☆', 5 - $review['rating']); ?></span>
                             </div>
-                            <p style="margin-bottom: 5px; font-size: 0.9rem;">"<?php echo substr($review['comment'], 0, 60) . '...'; ?>"</p>
+                            <p style="margin-bottom: 5px; font-size: 0.9rem;">"<?php echo htmlspecialchars(substr($review['comment'], 0, 60)) . '...'; ?>"</p>
                             <div style="display: flex; justify-content: space-between; font-size: 0.8rem; color: #666;">
-                                <span><?php echo ($review['package_name'] ? $review['package_name'] : 'Attraction Review'); ?></span>
+                                <span><?php echo ($review['package_name'] ? 'Package: ' . htmlspecialchars($review['package_name']) : 'Attraction: ' . htmlspecialchars($review['attraction_name'])); ?></span>
                                 <span><?php echo date('M j, Y', strtotime($review['date_posted'])); ?></span>
                             </div>
                         </div>

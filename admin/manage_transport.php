@@ -13,22 +13,22 @@ $page_title = "Manage Transport";
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['add_transport'])) {
         $transport_type = mysqli_real_escape_string($conn, $_POST['transport_type']);
-        $departure_city = mysqli_real_escape_string($conn, $_POST['departure_city']);
-        $arrival_city = mysqli_real_escape_string($conn, $_POST['arrival_city']);
+        $departure_city_id = intval($_POST['departure_city_id']);
+        $arrival_city_id = intval($_POST['arrival_city_id']);
         $departure_time = mysqli_real_escape_string($conn, $_POST['departure_time']);
         $arrival_time = mysqli_real_escape_string($conn, $_POST['arrival_time']);
         $approx_price = mysqli_real_escape_string($conn, $_POST['approx_price']);
         $description = mysqli_real_escape_string($conn, $_POST['description']);
 
-        $sql = "INSERT INTO transport_options (transport_type, departure_city, arrival_city, departure_time, arrival_time, approx_price, description)
-                VALUES ('$transport_type', '$departure_city', '$arrival_city', '$departure_time', '$arrival_time', '$approx_price', '$description')";
+        $sql = "INSERT INTO transport_options (transport_type, departure_city_id, arrival_city_id, departure_time, arrival_time, approx_price, description)
+                VALUES ('$transport_type', '$departure_city_id', '$arrival_city_id', '$departure_time', '$arrival_time', '$approx_price', '$description')";
 
         mysqli_query($conn, $sql);
     } elseif (isset($_POST['update_transport'])) {
         $transport_id = intval($_POST['transport_id']);
         $transport_type = mysqli_real_escape_string($conn, $_POST['transport_type']);
-        $departure_city = mysqli_real_escape_string($conn, $_POST['departure_city']);
-        $arrival_city = mysqli_real_escape_string($conn, $_POST['arrival_city']);
+        $departure_city_id = intval($_POST['departure_city_id']);
+        $arrival_city_id = intval($_POST['arrival_city_id']);
         $departure_time = mysqli_real_escape_string($conn, $_POST['departure_time']);
         $arrival_time = mysqli_real_escape_string($conn, $_POST['arrival_time']);
         $approx_price = mysqli_real_escape_string($conn, $_POST['approx_price']);
@@ -36,8 +36,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         $sql = "UPDATE transport_options SET 
                 transport_type = '$transport_type', 
-                departure_city = '$departure_city', 
-                arrival_city = '$arrival_city',
+                departure_city_id = '$departure_city_id', 
+                arrival_city_id = '$arrival_city_id',
                 departure_time = '$departure_time',
                 arrival_time = '$arrival_time',
                 approx_price = '$approx_price',
@@ -51,6 +51,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $sql = "DELETE FROM transport_options WHERE transport_id = $transport_id";
         mysqli_query($conn, $sql);
     }
+}
+
+// Fetch cities for dropdown menus and display lookup
+$cities_sql = "SELECT city_id, city_name FROM cities ORDER BY city_name";
+$cities_result = mysqli_query($conn, $cities_sql);
+$cities_lookup = [];
+while ($city = mysqli_fetch_assoc($cities_result)) {
+    $cities_lookup[$city['city_id']] = $city['city_name'];
 }
 ?>
 
@@ -97,7 +105,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </thead>
                 <tbody>
                     <?php
-                    $sql = "SELECT * FROM transport_options ORDER BY transport_id DESC";
+                    $sql = "SELECT * FROM transport_options ORDER BY transport_id";
                     $result = mysqli_query($conn, $sql);
 
                     while ($row = mysqli_fetch_assoc($result)) {
@@ -105,16 +113,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         if ($row['transport_type'] == 'bus') $badge_class = 'badge-bus';
                         if ($row['transport_type'] == 'train') $badge_class = 'badge-train';
                         if ($row['transport_type'] == 'flight') $badge_class = 'badge-flight';
+                        if ($row['transport_type'] == 'car') $badge_class = 'badge-car'; // Added car
                         
                         echo '<tr>';
                         echo '<td>' . $row['transport_id'] . '</td>';
                         echo '<td><span class="transport-badge ' . $badge_class . '">' . ucfirst($row['transport_type']) . '</span></td>';
-                        echo '<td>' . $row['departure_city'] . '</td>';
-                        echo '<td>' . $row['arrival_city'] . '</td>';
+                        echo '<td>' . htmlspecialchars($cities_lookup[$row['departure_city_id']] ?? 'N/A') . '</td>';
+                        echo '<td>' . htmlspecialchars($cities_lookup[$row['arrival_city_id']] ?? 'N/A') . '</td>';
                         echo '<td>' . date('h:i A', strtotime($row['departure_time'])) . '</td>';
                         echo '<td>₹' . $row['approx_price'] . '</td>';
                         echo '<td class="action-btns">';
-                        echo '<a href="#" class="edit-btn" onclick="openEditModal(' . $row['transport_id'] . ', \'' . htmlspecialchars($row['transport_type'], ENT_QUOTES) . '\', \'' . htmlspecialchars($row['departure_city'], ENT_QUOTES) . '\', \'' . htmlspecialchars($row['arrival_city'], ENT_QUOTES) . '\', \'' . htmlspecialchars($row['departure_time'], ENT_QUOTES) . '\', \'' . htmlspecialchars($row['arrival_time'], ENT_QUOTES) . '\', \'' . $row['approx_price'] . '\', \'' . htmlspecialchars($row['description'], ENT_QUOTES) . '\')"><i class="fas fa-edit"></i> Edit</a>';
+                        echo '<a href="#" class="edit-btn" onclick="openEditModal(' . $row['transport_id'] . ', \'' . htmlspecialchars($row['transport_type'], ENT_QUOTES) . '\', ' . $row['departure_city_id'] . ', ' . $row['arrival_city_id'] . ', \'' . htmlspecialchars($row['departure_time'], ENT_QUOTES) . '\', \'' . htmlspecialchars($row['arrival_time'], ENT_QUOTES) . '\', \'' . $row['approx_price'] . '\', \'' . htmlspecialchars($row['description'], ENT_QUOTES) . '\')"><i class="fas fa-edit"></i> Edit</a>';
                         echo '<form method="POST" action="" style="display:inline;">';
                         echo '<input type="hidden" name="transport_id" value="' . $row['transport_id'] . '">';
                         echo '<button type="submit" name="delete_transport" class="delete-btn" onclick="return confirm(\'Are you sure you want to delete this transport option?\')"><i class="fas fa-trash"></i> Delete</button>';
@@ -148,13 +157,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
 
             <div class="form-group">
-                <label for="departure_city">Departure City</label>
-                <input type="text" class="form-control" id="modal_departure_city" name="departure_city" required>
+                <label for="departure_city_id">Departure City</label>
+                <select class="form-control" id="modal_departure_city_id" name="departure_city_id" required>
+                    <option value="">Select Departure City</option>
+                    <?php 
+                    mysqli_data_seek($cities_result, 0); // Reset result pointer
+                    while ($city = mysqli_fetch_assoc($cities_result)): ?>
+                        <option value="<?php echo $city['city_id']; ?>"><?php echo $city['city_name']; ?></option>
+                    <?php endwhile; ?>
+                </select>
             </div>
 
             <div class="form-group">
-                <label for="arrival_city">Arrival City</label>
-                <input type="text" class="form-control" id="modal_arrival_city" name="arrival_city" required>
+                <label for="arrival_city_id">Arrival City</label>
+                <select class="form-control" id="modal_arrival_city_id" name="arrival_city_id" required>
+                    <option value="">Select Arrival City</option>
+                    <?php 
+                    mysqli_data_seek($cities_result, 0); // Reset result pointer
+                    while ($city = mysqli_fetch_assoc($cities_result)): ?>
+                        <option value="<?php echo $city['city_id']; ?>"><?php echo $city['city_name']; ?></option>
+                    <?php endwhile; ?>
+                </select>
             </div>
 
             <div class="form-group">
@@ -190,8 +213,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         document.getElementById('modalTitle').innerText = 'Add New Transport';
         document.getElementById('transport_id').value = '';
         document.getElementById('modal_transport_type').value = '';
-        document.getElementById('modal_departure_city').value = '';
-        document.getElementById('modal_arrival_city').value = '';
+        document.getElementById('modal_departure_city_id').value = '';
+        document.getElementById('modal_arrival_city_id').value = '';
         document.getElementById('modal_departure_time').value = '';
         document.getElementById('modal_arrival_time').value = '';
         document.getElementById('modal_approx_price').value = '';
@@ -201,12 +224,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         document.getElementById('transportModal').style.display = 'flex';
     }
 
-    function openEditModal(transportId, type, depCity, arrCity, depTime, arrTime, price, description) {
+    function openEditModal(transportId, type, depCityId, arrCityId, depTime, arrTime, price, description) {
         document.getElementById('modalTitle').innerText = 'Edit Transport';
         document.getElementById('transport_id').value = transportId;
         document.getElementById('modal_transport_type').value = type;
-        document.getElementById('modal_departure_city').value = depCity;
-        document.getElementById('modal_arrival_city').value = arrCity;
+        document.getElementById('modal_departure_city_id').value = depCityId;
+        document.getElementById('modal_arrival_city_id').value = arrCityId;
         document.getElementById('modal_departure_time').value = depTime;
         document.getElementById('modal_arrival_time').value = arrTime;
         document.getElementById('modal_approx_price').value = price;

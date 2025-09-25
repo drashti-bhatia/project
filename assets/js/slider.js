@@ -3,7 +3,8 @@ let slides = document.querySelectorAll('.slide');
 let dots = document.querySelectorAll('.nav-dot');
 let autoSlideInterval;
 let progressInterval;
-const slideInterval = 5000; // 5 seconds
+
+const slideInterval = 8000; // 5 seconds
 
 // Initialize slider
 function initSlider() {

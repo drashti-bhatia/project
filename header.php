@@ -19,7 +19,7 @@ session_start();
         <div class="container main-header">
             <div class="logo">
                 <a href="index.php">
-                    <img src="assets/img/logo/logo.png" alt="The Mobile Store">
+                    <img src="assets/img/logo/logo.png" alt="The Gujarat Yatra Portal logo">
                     <span class="logo-text">Gujarat Yatra Portal</span>
                 </a>
             </div>
@@ -29,14 +29,15 @@ session_start();
                     <ul>
                         <li><a href="index.php">Home</a></li>
                         <li><a href="attractions.php">Attractions</a></li>
-                        <li><a href="packages/packages.php">Packages</a></li>
+                        <li><a href="packages.php">Packages</a></li>
+                        <li><a href="cities.php">Cities</a></li>
                         <li><a href="about.php">About Us</a></li>
                     </ul>
                 </nav>
 
                 <div class="search-container">
                     <span class="material-symbols-rounded search-icon-input">search</span>
-                    <input type="text" class="search-input" placeholder="Search...">
+                    <input type="text" class="search-input" placeholder="       Search...">
                 </div>
 
                 <div class="header-actions">
@@ -45,8 +46,8 @@ session_start();
                             <div class="dropdown">
                                 <button class="user-btn"><i class="fas fa-user"></i></button>
                                 <div class="dropdown-content">
-                                    <a href="packages/bookings.php">My Bookings</a>
-                                    <a href="reviews/reviews.php">My Reviews</a>
+                                    <a href="my_bookings.php">My Bookings</a>
+                                    <a href="reviews.php">My Reviews</a>
                                     <a href="logout.php">Logout</a>
                                 </div>
                             </div>
