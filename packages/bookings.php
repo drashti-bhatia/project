@@ -18,7 +18,7 @@ $sql = "SELECT b.*, p.name as package_name, p.price as package_price
         ORDER BY b.booking_date DESC";
 $result = mysqli_query($conn, $sql);
 ?>
-
+<!-- this is the testing comment  -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
